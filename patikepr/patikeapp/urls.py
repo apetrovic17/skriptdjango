@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='patikeapp_index'),
-    path('int/<br>', views.broj, name='patikeapp_broj')
+    path('int/<int:br>', views.broj, name='patikeapp_broj')
 ]

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Patike, Ocene
+
+admin.site.register(Patike)
+admin.site.register(Ocene)
