@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'patikeapp:patike' %}">
-        <img src="{% static 'img/rocket.png' %}" width="30" height="30" class="d-inline-block align-top" alt="logo"/>
+        <img src="{% static 'img/sh.png' %}" width="30" height="30" class="d-inline-block align-top" alt="logo"/>
         PatikeApp
     </a>
 
@@ -10,10 +10,13 @@
         <li class="nav-item">
             {% if not perms.patikeapp.add_patika %}
                 <a class="nav-link disabled" href="{% url 'patikeapp:new' %}">Nova patika</a>
+
             {% else %}
                 <a class="nav-link" href="{% url 'patikeapp:new' %}">Nova patika</a>
+
             {% endif %}
         </li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'patikeapp:user_register' %}">Registracija</a></li>
     </ul>
 
     {% if user.is_authenticated %}

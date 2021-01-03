@@ -6,11 +6,7 @@
         <div class="card-header">
             <h1>
                 {{ patika.naziv }}
-                {% if perms.patikeapp.change_patika %}
-                    <a href="{% url 'patikeapp:edit' patika.id %}">
-                        <span class="badge badge-primary">Edit</span>
-                    </a>
-                {% endif %}
+
             </h1>
         </div>
         <div class="card-body">
@@ -21,6 +17,28 @@
 
             </blockquote>
         </div>
+
+        <div>
+            <h2>
+            {% if perms.patikeapp.change_patika %}
+                    <a href="{% url 'patikeapp:edit' patika.id %}">
+                        <span class="badge badge-primary">Edit</span>
+                    </a>
+
+                <a href="{% url 'patikeapp:delete' patika.id %}">
+                        <span class="badge badge-primary" style="background-color: red">Delete</span>
+                    </a>
+
+
+
+
+                {% endif %}
+            </h2>
+
+        </div>
+
     </div>
+
+
 
 {% endblock %}
