@@ -1,0 +1,70 @@
+{% extends 'master.html' %}
+
+{% block title %}
+    New article
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'patikeapp:new' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.naziv.id_for_label }}">{{ form.naziv.label_tag }}</label>
+            <input type="text" class="form-control" id="{{ form.naziv.id_for_label }}" name="{{ form.naziv.name }}">
+            {% if form.naziv.errors %}
+                <div class="alert alert-danger">
+                    <ul style="text-align: left">
+                        {% for error in form.naziv.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.model.id_for_label }}">{{ form.model.label_tag }}</label>
+            <textarea class="form-control" id="{{ form.model.id_for_label }}" name="{{ form.model.name }}" rows="1"></textarea>
+            {% if form.model.errors %}
+                <div class="alert alert-danger">
+                    <ul style="text-align: left">
+                        {% for error in form.model.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.velicina.id_for_label }}">{{ form.velicina.label_tag }}</label>
+            <textarea class="form-control" id="{{ form.velicina.id_for_label }}" name="{{ form.velicina.name }}" rows="1"></textarea>
+            {% if form.velicina.errors %}
+                <div class="alert alert-danger">
+                    <ul style="text-align: left">
+                        {% for error in form.velicina.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cena.id_for_label }}">{{ form.cena.label_tag }}</label>
+            <textarea class="form-control" id="{{ form.cena.id_for_label }}" name="{{ form.cena.name }}" rows="1"></textarea>
+            {% if form.cena.errors %}
+                <div class="alert alert-danger">
+                    <ul style="text-align: left">
+                        {% for error in form.cena.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+
+        <input type="submit" class="btn btn-primary btn-lg" value="Sacuvaj"/>
+    </form>
+
+{% endblock %}
