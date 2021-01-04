@@ -6,7 +6,7 @@ class Patike(models.Model):
     model = models.CharField(max_length=64, default='')
     velicina = models.IntegerField(default=0)
     cena = models.IntegerField(default=0)
-   # owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.naziv + ' ' +self.model

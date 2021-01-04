@@ -31,7 +31,7 @@
             </h2>
 
                 {% endif %}
-
+<h6>
 <form method="post" action="{% url 'patikeapp:oceni' patika.id %}">
         {% csrf_token %}
         <div class="form-group">
@@ -66,11 +66,25 @@
     </form>
 
 
-
- </div>
-
-
+</h6>
     </div>
+
+
+
+</div>
+
+<div>
+            <br>
+
+     {% for o in ocene %}
+        {{o.owner}}:
+        {{o.ocena}} -
+        {{o.opis}}
+
+        <br>
+    {% endfor %}
+
+</div>
 
 
 

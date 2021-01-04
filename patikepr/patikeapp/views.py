@@ -19,7 +19,8 @@ def patike(req):
 
 def patika(req, id):
     tmp = get_object_or_404(Patike, id=id)
-    return render(req, 'patika.html', {'patika': tmp, 'page_title': tmp.naziv})
+    oc = Ocene.objects.filter(patike=tmp)
+    return render(req, 'patika.html', {'patika': tmp, 'page_title': tmp.naziv, 'ocene': oc})
 
 def delete(req, id):
     Patike.objects.filter(id=id).delete()
@@ -74,7 +75,7 @@ def oceni(req,id):
             a = Ocene(ocena=form.cleaned_data['ocena'], opis=form.cleaned_data['opis'], owner=req.user, patike=Patike.objects.get(id=id))
             a.save()
             tmp = get_object_or_404(Patike, id=id)
-            return render(req, 'patika.html', {'patika': tmp, 'page_title': tmp.naziv, 'form': form})
+            return redirect('/patika/'+str(id))
         else:
             tmp = get_object_or_404(Patike, id=id)
             return render(req, 'patika.html', {'patika': tmp, 'page_title': tmp.naziv, 'form': form})
