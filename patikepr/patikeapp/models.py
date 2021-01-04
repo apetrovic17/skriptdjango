@@ -20,6 +20,6 @@ class Ocene(models.Model):
     patike = models.ForeignKey(Patike, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __int__(self):
-        return self.ocena
+    def __str__(self):
+        return self.opis
 

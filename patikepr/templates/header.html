@@ -16,8 +16,12 @@
 
             {% endif %}
         </li>
-        <li class="nav-item"> <a class="nav-link" href="{% url 'patikeapp:user_register' %}">Registracija</a></li>
+
     </ul>
+
+
+    <a class="nav-link" href="{% url 'patikeapp:user_register' %}">Registracija</a>
+
 
     {% if user.is_authenticated %}
         <a class="nav-link" href="{% url 'logout' %}">Logout {{ user.get_username }}</a>

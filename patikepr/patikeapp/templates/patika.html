@@ -28,14 +28,47 @@
                 <a href="{% url 'patikeapp:delete' patika.id %}">
                         <span class="badge badge-primary" style="background-color: red">Delete</span>
                     </a>
-
-
-
-
-                {% endif %}
             </h2>
 
+                {% endif %}
+
+<form method="post" action="{% url 'patikeapp:oceni' patika.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.ocena.id_for_label }}">{{ form.ocena.label_tag }}</label>
+            <input type="text" class="form-control" id="{{ form.ocena.id_for_label }}" name="{{ form.ocena.name }}">
+            {% if form.ocena.errors %}
+                <div class="alert alert-danger">
+                    <ul style="text-align: left">
+                        {% for error in form.ocena.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         </div>
+
+        <div class="form-group">
+            <label for="{{ form.opis.id_for_label }}">{{ form.opis.label_tag }}</label>
+            <textarea class="form-control" id="{{ form.opis.id_for_label }}" name="{{ form.opis.name }}" rows="1"></textarea>
+            {% if form.opis.errors %}
+                <div class="alert alert-danger">
+                    <ul style="text-align: left">
+                        {% for error in form.opis.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+
+        <input type="submit" class="btn btn-primary btn-lg" value="Oceni"/>
+    </form>
+
+
+
+ </div>
+
 
     </div>
 

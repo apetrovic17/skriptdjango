@@ -2,8 +2,8 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
-from .models import Patike
-from .forms import PatikeForm
+from .models import Patike, Ocene
+from .forms import PatikeForm, OceneForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from .forms import RegisterForm
@@ -33,18 +33,18 @@ def edit(req, id):
         form = PatikeForm(req.POST)
 
         if form.is_valid():
-            a = Patike.objects.get(id=id)
-            a.naziv = form.cleaned_data['naziv']
-            a.model = form.cleaned_data['model']
-            a.velicina = form.cleaned_data['velicina']
-            a.cena = form.cleaned_data['cena']
-            a.save()
+            p = Patike.objects.get(id=id)
+            p.naziv = form.cleaned_data['naziv']
+            p.model = form.cleaned_data['model']
+            p.velicina = form.cleaned_data['velicina']
+            p.cena = form.cleaned_data['cena']
+            p.save()
             return redirect('patikeapp:patike')
         else:
             return render(req, 'edit.html', {'form': form, 'id': id})
     else:
-        a = Patike.objects.get(id=id)
-        form = PatikeForm(instance=a)
+        p = Patike.objects.get(id=id)
+        form = PatikeForm(instance=p)
         return render(req, 'edit.html', {'form': form, 'id': id})
 
 
@@ -54,8 +54,8 @@ def new(req):
         form = PatikeForm(req.POST)
 
         if form.is_valid():
-            a = Patike(naziv=form.cleaned_data['naziv'], model=form.cleaned_data['model'], velicina=form.cleaned_data['velicina'], cena=form.cleaned_data['cena'])
-            a.save()
+            p = Patike(naziv=form.cleaned_data['naziv'], model=form.cleaned_data['model'], velicina=form.cleaned_data['velicina'], cena=form.cleaned_data['cena'])
+            p.save()
             return redirect('patikeapp:patike')
         else:
             return render(req, 'new.html', {'form': form})
@@ -64,14 +64,31 @@ def new(req):
         return render(req, 'new.html', {'form': form})
 
 
+@login_required()
+def oceni(req,id):
+    if req.method == 'POST':
+        form = OceneForm(req.POST)
+
+        if form.is_valid():
+
+            a = Ocene(ocena=form.cleaned_data['ocena'], opis=form.cleaned_data['opis'], owner=req.user, patike=Patike.objects.get(id=id))
+            a.save()
+            tmp = get_object_or_404(Patike, id=id)
+            return render(req, 'patika.html', {'patika': tmp, 'page_title': tmp.naziv, 'form': form})
+        else:
+            tmp = get_object_or_404(Patike, id=id)
+            return render(req, 'patika.html', {'patika': tmp, 'page_title': tmp.naziv, 'form': form})
+
+
+
 def user_register(request):
-    # if this is a POST request we need to process the form data
+
     template = 'register.html'
 
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
+
         form = RegisterForm(request.POST)
-        # check whether it's valid:
+
         if form.is_valid():
             if User.objects.filter(username=form.cleaned_data['username']).exists():
                 return render(request, template, {
@@ -89,7 +106,7 @@ def user_register(request):
                     'error_message': 'Sifra se ne poklapa.'
                 })
             else:
-                # Create the user:
+
                 user = User.objects.create_user(
                     form.cleaned_data['username'],
                     form.cleaned_data['email'],
@@ -100,13 +117,13 @@ def user_register(request):
                 user.phone_number = form.cleaned_data['phone_number']
                 user.save()
 
-                # Login the user
+
                 login(request, user)
 
-                # redirect to accounts page:
+
                 return HttpResponseRedirect('/')
 
-    # No post data availabe, let's just show the page.
+
     else:
         form = RegisterForm()
 

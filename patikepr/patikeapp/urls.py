@@ -11,4 +11,5 @@ urlpatterns = [
     path('new/', views.new, name='new'),
     url(r'^register/$', views.user_register, name='user_register'),
     path('delete/<int:id>', views.delete, name='delete'),
+    path('oceni/<int:id>', views.oceni, name='oceni')
 ]
